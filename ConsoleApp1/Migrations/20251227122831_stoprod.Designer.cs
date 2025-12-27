@@ -3,6 +3,7 @@ using System;
 using ConsoleApp1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ConsoleApp1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251227122831_stoprod")]
+    partial class stoprod
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -188,21 +190,6 @@ namespace ConsoleApp1.Migrations
                     b.ToTable("Visits");
                 });
 
-            modelBuilder.Entity("CustomerProduct", b =>
-                {
-                    b.Property<int>("CustomersId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("CustomersId", "ProductsId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("CustomerProduct");
-                });
-
             modelBuilder.Entity("ProductStore", b =>
                 {
                     b.Property<int>("ProductsId")
@@ -274,21 +261,6 @@ namespace ConsoleApp1.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Store");
-                });
-
-            modelBuilder.Entity("CustomerProduct", b =>
-                {
-                    b.HasOne("ConsoleApp1.Models.Customer", null)
-                        .WithMany()
-                        .HasForeignKey("CustomersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ConsoleApp1.Models.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProductStore", b =>

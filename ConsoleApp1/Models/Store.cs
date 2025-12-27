@@ -10,4 +10,5 @@ class Store {
     public int AdminId {get;set;}
     [ForeignKey("AdminId")]
     public Admin Admin {get; set;}
+    public List<Product> Products {get; set;}
 }

@@ -1,15 +1,22 @@
 ﻿using System;
+using System.Data.Common;
 using System.Linq.Expressions;
 using System.Xml.Linq;
 using ConsoleApp1.Data;
 using ConsoleApp1.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 
 namespace ConsoleApp1;
 
 class Program { 
-    public static dynamic user;
-    public static string Input(string placeHolder, Expression<Func<dynamic, dynamic>> errorCondition, string errorMessage) {
+    public static int userId;
+    public static string Input(string placeHolder) {
+        Console.WriteLine(placeHolder);
+        var choice = Console.ReadLine();
+        return choice;
+    }
+    public static string Input(string placeHolder, Expression<Func<dynamic, bool>> errorCondition, string errorMessage) {
         Console.WriteLine(placeHolder);
         var choice = Console.ReadLine();
         var cond = errorCondition.Compile();
@@ -92,7 +99,7 @@ class Program {
     }
     public static void AddStore() {
         var choice = Input("Enter Description (Name;Address;AdminId)", x => 1 == 1, "Error").Trim().Split(";");
-        var admin = new Store() {
+        var admin = new ConsoleApp1.Models.Store() {
             Name = choice[0],
             Address = choice[1],
             AdminId = int.Parse(choice[2])
@@ -108,9 +115,42 @@ class Program {
         db.SaveChanges();
         ShowAdminActions();
     }
+    public static void addProductToStore() {
+        var productsIds = new List<int>(){};
+        var storesIds = new List<int>(){};
+        var p = Input("enter description (ProductId;ProductId;...)").Split(";");
+        var s = Input("enter description (StoreId;StoreId;...)").Split(";");
+        foreach (var aa in p) {
+            productsIds.Add(int.Parse(aa));
+        }
+        foreach (var aa in s) {
+            storesIds.Add(int.Parse(aa));
+        }
+        using var db = new AppDbContext();
+        var sotres = db.Stores.Include(x => x.Products).Where(x => storesIds.Contains(x.Id)).ToList();
+        var prods = db.Products.Where(x => productsIds.Contains(x.Id)).ToList();
+        foreach (var store in sotres) {
+            store.Products.AddRange(prods);
+        }
+        db.SaveChanges();
+        ShowAdminActions();
+    }
+    public static void addFavorite() {
+        var choice = int.Parse(Input("Product Id: "));
+        using var db = new AppDbContext();
+        var prod = db.Products.FirstOrDefault(x => x.Id == choice);
+        if (prod == null) {
+            addFavorite();
+            return;
+        }
+        var u = db.Customers.Include(x => x.Products).FirstOrDefault(x => x.Id == userId);
+        u.Products.Add(prod);
+        db.SaveChanges();
+        ShowCustomerAction();
+    }
     public static void ShowAdminActions() {
         Console.Clear();
-        Console.WriteLine("Enter Action \n1 = Add Product\n2 = Update Product\n3 = List Products\n4 = Delete Product\n5 = Add Admin\n6 = Add Store");
+        Console.WriteLine("Enter Action \n1 = Add Product\n2 = Update Product\n3 = List Products\n4 = Delete Product\n5 = Add Admin\n6 = Add Store\n7 = add product to store");
         var choice = int.Parse(Console.ReadLine());
         if (choice == 1) {
             AddProduct();
@@ -124,6 +164,8 @@ class Program {
             AddAdmin();
         } else if (choice == 6) {
             AddStore();
+        } else if (choice == 7) {
+            addProductToStore();
         }
     }
     public static void EnterAsAdmin() {
@@ -138,7 +180,7 @@ class Program {
             EnterAsAdmin();
             return;
         }
-        user = foundAdmin;
+        userId = foundAdmin.Id;
         Console.Clear();
         Console.WriteLine($"Wellcome {foundAdmin.Name} {foundAdmin.Surname}");
         ShowAdminActions();
@@ -148,6 +190,7 @@ class Program {
         var choice = int.Parse(Console.ReadLine());
         using var db = new AppDbContext();
         var prod = db.Products.FirstOrDefault(x => x.Id == choice);
+        var user = db.Customers.FirstOrDefault(x => x.Id == userId);
         if (user.Balance < prod.Price) {
             Console.WriteLine("not enough money");
             Console.ReadKey();
@@ -174,8 +217,8 @@ class Program {
         ShowAdminActions();
     }
     public static void ShowCustomerAction() {
-        Console.Clear();
-        Console.WriteLine("1: show products\n2: buy product\n3: show orders");
+        // Console.Clear();
+        Console.WriteLine("1: show products\n2: buy product\n3: show orders\n4: add favorites");
         int choice = int.Parse(Console.ReadLine());
         if (choice == 1) {
             ListProduct(1);
@@ -183,6 +226,8 @@ class Program {
             buyProduct();
         } else if (choice == 3) {
             ShowOrder();
+        } else if (choice == 4) {
+            addFavorite();
         }
     }
     public static void EnterAsCustomer() {
@@ -197,8 +242,17 @@ class Program {
             EnterAsCustomer();
             return;
         }
-        user = foundAdmin;
-        Console.WriteLine($"Wellcome {foundAdmin.Name} {foundAdmin.Surname}");
+        userId = foundAdmin.Id;
+        var choice = int.Parse(Input("Enter Shop Id: ", x => 1 == 1, "Error"));
+        var store = dbContext.Stores.FirstOrDefault(x => x.Id == choice);
+        if (store == null) {
+            EnterAsCustomer();
+        }
+        Console.WriteLine($"Wellcome {foundAdmin.Name} {foundAdmin.Surname} to {store.Name}");
+        var visit = new Visit() {
+            CustomerId = foundAdmin.Id,
+            StoreId = choice
+        };
         ShowCustomerAction();
     }
     public static void signUp() {

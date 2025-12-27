@@ -3,6 +3,7 @@ using System;
 using ConsoleApp1.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ConsoleApp1.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251227130736_fav")]
+    partial class fav
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,15 +192,15 @@ namespace ConsoleApp1.Migrations
 
             modelBuilder.Entity("CustomerProduct", b =>
                 {
-                    b.Property<int>("CustomersId")
+                    b.Property<int>("FavoritesId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ProductsId")
+                    b.Property<int>("LovedById")
                         .HasColumnType("integer");
 
-                    b.HasKey("CustomersId", "ProductsId");
+                    b.HasKey("FavoritesId", "LovedById");
 
-                    b.HasIndex("ProductsId");
+                    b.HasIndex("LovedById");
 
                     b.ToTable("CustomerProduct");
                 });
@@ -278,15 +280,15 @@ namespace ConsoleApp1.Migrations
 
             modelBuilder.Entity("CustomerProduct", b =>
                 {
-                    b.HasOne("ConsoleApp1.Models.Customer", null)
+                    b.HasOne("ConsoleApp1.Models.Product", null)
                         .WithMany()
-                        .HasForeignKey("CustomersId")
+                        .HasForeignKey("FavoritesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ConsoleApp1.Models.Product", null)
+                    b.HasOne("ConsoleApp1.Models.Customer", null)
                         .WithMany()
-                        .HasForeignKey("ProductsId")
+                        .HasForeignKey("LovedById")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
