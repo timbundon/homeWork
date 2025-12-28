@@ -15,7 +15,7 @@ namespace ConsoleApp1.Data {
         public DbSet<Store> Stores {get; set; }
         public DbSet<Visit> Visits {get; set;}
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-            optionsBuilder.UseNpgsql("Server=localhost; Port=5432; Username=postgres; Password=123; Database=CoffeeShop");
+            optionsBuilder.UseNpgsql("Server=localhost; Port=5433; Username=postgres; Password=1234; Database=CoffeeShop");
         }
     }
 }
