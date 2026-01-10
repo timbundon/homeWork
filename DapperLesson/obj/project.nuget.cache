@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "dgSpecHash": "uTygC4FIY8LL3Z+nVnLWWe8PVeTngUZRiE2O4/NqfDTZp7Gh4NvwyfDeJT7/lwoMc1DfT9rC0tP5iBBzeDZqJg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\BurnashevTi\\Desktop\\homeWork\\DapperLesson\\DapperLesson.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\BurnashevTi\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512",
+    "C:\\Users\\BurnashevTi\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\9.0.1\\microsoft.bcl.asyncinterfaces.9.0.1.nupkg.sha512",
+    "C:\\Users\\BurnashevTi\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\6.0.0\\microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512",
+    "C:\\Users\\BurnashevTi\\.nuget\\packages\\npgsql\\7.0.0\\npgsql.7.0.0.nupkg.sha512",
+    "C:\\Users\\BurnashevTi\\.nuget\\packages\\system.reflection.emit.lightweight\\4.7.0\\system.reflection.emit.lightweight.4.7.0.nupkg.sha512",
+    "C:\\Users\\BurnashevTi\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "DapperLesson зависит от Npgsql (>= 6.0.400), но Npgsql 6.0.400 не найден. Использовано наилучшее приближенное соответствие Npgsql 7.0.0.",
+      "libraryId": "Npgsql",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
+}

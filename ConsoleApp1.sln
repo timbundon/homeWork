@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolControlSystem", "SchoolControlSystem\SchoolControlSystem.csproj", "{B2FD6C30-CBBF-4ABB-A567-AD973557956A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperLesson", "DapperLesson\DapperLesson.csproj", "{7777BE08-9248-4698-8F2E-EB597AEC15D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{B2FD6C30-CBBF-4ABB-A567-AD973557956A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2FD6C30-CBBF-4ABB-A567-AD973557956A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2FD6C30-CBBF-4ABB-A567-AD973557956A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7777BE08-9248-4698-8F2E-EB597AEC15D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7777BE08-9248-4698-8F2E-EB597AEC15D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7777BE08-9248-4698-8F2E-EB597AEC15D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7777BE08-9248-4698-8F2E-EB597AEC15D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
